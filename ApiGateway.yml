@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: WebStore API-Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: CustomerService
+          uri: lb://CustomerService
+          predicates:
+            - Path=/customers/**
+        - id: ProductService
+          uri: lb://ProductService
+          predicates:
+            - Path=/product/**
+        - id: PaymentService
+          uri: lb://PaymentService
+          predicates:
+            - Path=/payments/**
+
+        - id: OrderCommandService
+          uri: lb://OrderCommandService
+          predicates:
+            - Path=/OrderCommand/**
+
+        - id: OrderQueryService
+          uri: lb://OrderQueryService
+          predicates:
+            - Path=/OrderQuery/**
+
+
+server:
+  port: 8090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8760/eureka/,
+        http://localhost:8761/eureka/
